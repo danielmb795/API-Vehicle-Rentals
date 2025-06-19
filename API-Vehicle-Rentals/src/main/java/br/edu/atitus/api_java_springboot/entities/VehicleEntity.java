@@ -1,8 +1,7 @@
 package br.edu.atitus.api_java_springboot.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.springframework.web.service.annotation.GetExchange;
 
 import java.util.UUID;
 
@@ -11,14 +10,20 @@ import java.util.UUID;
 public class VehicleEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(length = 30, nullable = false)
     private String modelo;
+
+    @Column(length = 30, nullable = false)
     private String marca;
+
+    @Column(length = 7, nullable = false)
     private String placa;
+
+    @Column(length = 4, nullable = false)
     private int ano;
-
-
 
 
     public String getModelo() {
