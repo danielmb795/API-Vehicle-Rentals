@@ -25,6 +25,52 @@ public class VehicleEntity {
     @Column(length = 4, nullable = false)
     private int ano;
 
+    @Column(length = 50, nullable = false)
+    private String cor;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(nullable = false)
+    private CarType type;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_user")
+    private UserEntity user;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_point")
+    private PointEntity point;
+
+    public String getCor() {
+        return cor;
+    }
+
+    public void setCor(String cor) {
+        this.cor = cor;
+    }
+
+    public CarType getType() {
+        return type;
+    }
+
+    public void setType(CarType type) {
+        this.type = type;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
+    public PointEntity getPoint() {
+        return point;
+    }
+
+    public void setPoint(PointEntity point) {
+        this.point = point;
+    }
 
     public String getModelo() {
         return modelo;
