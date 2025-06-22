@@ -93,6 +93,4 @@ public class VehicleService {
 
         return repository.findByUser(userAuth);
     }
-
-
 }
