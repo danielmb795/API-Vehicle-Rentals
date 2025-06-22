@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.regex.Pattern;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -32,11 +33,29 @@ public class UserService implements UserDetailsService {
         if (user.getEmail() == null || user.getEmail().isEmpty())
             throw new Exception("Email inválido");
         user.setEmail(user.getEmail().trim().toLowerCase());
+
         //TODO Validar o email (Estrutura, sintaxe[example@example.com]) => REGEX
+
+
+        // Verifica se o e-mail tem estrutura válida (simples)
+        Pattern emailRegex = Pattern.compile("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
+        if (!emailRegex.matcher(user.getEmail()).matches()) {
+            throw new Exception("Formato de e-mail inválido");
+        }
+
 
         if (user.getPassword() == null || user.getPassword().isEmpty() || user.getPassword().length() < 8)
             throw new Exception("Senha inválida");
+
         //TODO Validar força da senha (caracteres maiúsculos, minisculos e numerais)
+
+        String senha = user.getPassword();
+
+        Pattern senhaForte = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$");
+        if (!senhaForte.matcher(senha).matches()) {
+            throw new Exception("A senha deve conter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula e um número.");
+        }
+
 
         if (user.getType() == null)
             throw new Exception("Tipo de usuário inválido");
