@@ -43,7 +43,7 @@ public class VehicleController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteVehicles(@PathVariable UUID id) throws Exception{
 
-        return ResponseEntity.ok("Localização Excluida");
+        return ResponseEntity.ok("Veiculo Excluido");
     }
 
 
