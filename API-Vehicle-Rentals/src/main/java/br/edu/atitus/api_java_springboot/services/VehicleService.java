@@ -12,6 +12,7 @@ import java.util.UUID;
 @Service
 public class VehicleService {
 
+
     private final VehicleRepository repository;
 
 
