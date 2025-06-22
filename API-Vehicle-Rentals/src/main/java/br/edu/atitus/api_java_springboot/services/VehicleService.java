@@ -39,6 +39,22 @@ public class VehicleService {
             throw new Exception("Placa não pode ser vazio");
         }
 
+        //Verificação da informação da placa.
+
+        String placa = car.getPlaca().toUpperCase();
+
+        if (placa.length() != 7) {
+            throw new Exception("Placa deve ter exatamente 7 caracteres");
+        }
+
+        long letras = placa.chars().filter(Character::isLetter).count();
+        long numeros = placa.chars().filter(Character::isDigit).count();
+
+        if (letras != 4 || numeros != 3) {
+            throw new Exception("Placa deve conter exatamente 4 letras e 3 números");
+        }
+
+        car.setPlaca(placa);
         if(car.getAno() < 1900) {
             throw new Exception("Ano de fabricação não pode ser menor que 1900");
         }
