@@ -12,6 +12,4 @@ import java.util.UUID;
 @Repository
 public interface VehicleRepository extends JpaRepository<VehicleEntity, UUID> {
     List<VehicleEntity> findByUser(UserEntity user );
-
-    UserEntity user(UserEntity user);
 }

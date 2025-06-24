@@ -1,7 +1,9 @@
 package br.edu.atitus.api_java_springboot.services;
 
+import br.edu.atitus.api_java_springboot.entities.PointEntity;
 import br.edu.atitus.api_java_springboot.entities.UserEntity;
 import br.edu.atitus.api_java_springboot.entities.VehicleEntity;
+import br.edu.atitus.api_java_springboot.repositories.PointRepository;
 import br.edu.atitus.api_java_springboot.repositories.VehicleRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -14,11 +16,12 @@ public class VehicleService {
 
 
     private final VehicleRepository repository;
+    private final PointRepository pointRepository;
 
-
-    public VehicleService(VehicleRepository repository) {
+    public VehicleService(VehicleRepository repository, PointRepository pointRepository) {
         super();
         this.repository = repository;
+        this.pointRepository = pointRepository;
     }
 
     //Metodo Save para criar e cadastrar objetos carro
@@ -67,7 +70,11 @@ public class VehicleService {
         UserEntity userAuth = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         car.setUser(userAuth);
 
-
+        List<PointEntity> point = pointRepository.findByUser(userAuth);
+        if (point.isEmpty()) {
+            throw new Exception("Usuário não possui ponto cadastrado");
+        }
+        car.setPoint(point.getLast());
 
         return repository.save(car);
     }
