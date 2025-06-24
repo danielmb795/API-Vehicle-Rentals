@@ -34,13 +34,11 @@ public class UserService implements UserDetailsService {
             throw new Exception("Email inválido");
         user.setEmail(user.getEmail().trim().toLowerCase());
 
-        //TODO Validar o email (Estrutura, sintaxe[example@example.com]) => REGEX
-
-
-        // Verifica se o e-mail tem estrutura válida (simples)
-        Pattern emailRegex = Pattern.compile("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
+        // Validação do email (Estrutura, sintaxe[example@example.com] e pelo menos dois domínios)
+        // Alteração na regex para garantir ao menos um ponto no domínio após o @
+        Pattern emailRegex = Pattern.compile("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,}$"); // Alterado de {2,4} para {2,} para ser mais flexível, mas mantendo a estrutura de pelo menos dois domínios após o @
         if (!emailRegex.matcher(user.getEmail()).matches()) {
-            throw new Exception("Formato de e-mail inválido");
+            throw new Exception("Formato de e-mail inválido. Deve conter @ e ao menos dois domínios (ex: usuario@dominio.com).");
         }
 
 
@@ -49,6 +47,7 @@ public class UserService implements UserDetailsService {
 
         String senha = user.getPassword();
 
+        // Validação da senha (pelo menos 8 caracteres, maiúscula, minúscula e número)
         Pattern senhaForte = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$");
         if (!senhaForte.matcher(senha).matches()) {
             throw new Exception("A senha deve conter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula e um número.");
@@ -62,8 +61,6 @@ public class UserService implements UserDetailsService {
             throw new Exception("Email já cadastrado");
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        repository.save(user);
 
         return repository.save(user);
     }
