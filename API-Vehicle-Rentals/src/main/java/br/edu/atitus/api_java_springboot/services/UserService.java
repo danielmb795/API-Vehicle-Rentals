@@ -28,7 +28,7 @@ public class UserService implements UserDetailsService {
 
         if (user.getUsername() == null || user.getUsername().isEmpty())
             throw new Exception("Nome inválido");
-        user.setName(user.getUsername().trim());
+        user.setName(user.getName().trim());
 
         if (user.getEmail() == null || user.getEmail().isEmpty())
             throw new Exception("Email inválido");
@@ -45,9 +45,7 @@ public class UserService implements UserDetailsService {
 
 
         if (user.getPassword() == null || user.getPassword().isEmpty() || user.getPassword().length() < 8)
-            throw new Exception("Senha inválida");
-
-        //TODO Validar força da senha (caracteres maiúsculos, minisculos e numerais)
+            throw new Exception("Senha deve ter pelo menos 8 caracteres");
 
         String senha = user.getPassword();
 
@@ -67,7 +65,7 @@ public class UserService implements UserDetailsService {
 
         repository.save(user);
 
-        return user;
+        return repository.save(user);
     }
 
     @Override

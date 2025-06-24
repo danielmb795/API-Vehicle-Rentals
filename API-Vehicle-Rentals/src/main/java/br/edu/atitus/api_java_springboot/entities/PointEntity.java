@@ -13,7 +13,6 @@ public class PointEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-
     @Column(columnDefinition = "Decimal (17,14)", nullable = false)
     private double latitude;
 

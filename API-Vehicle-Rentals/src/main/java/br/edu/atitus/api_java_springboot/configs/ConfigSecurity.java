@@ -3,6 +3,7 @@ package br.edu.atitus.api_java_springboot.configs;
 import br.edu.atitus.api_java_springboot.components.AuthTokenFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,7 +23,8 @@ public class ConfigSecurity {
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/ws**", "/ws/**").authenticated().anyRequest().permitAll())
+                        auth.requestMatchers(HttpMethod.OPTIONS).permitAll().
+                                requestMatchers("/ws**", "/ws/**").authenticated().anyRequest().permitAll())
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
@@ -33,7 +35,7 @@ public class ConfigSecurity {
         return new WebMvcConfigurer() {
         @Override
             public void addCorsMappings(CorsRegistry registry) {
-            registry.addMapping("/**").allowedOrigins("*");
+            registry.addMapping("/**").allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS").allowedOrigins("*");
         }
         };
     }

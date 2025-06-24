@@ -31,13 +31,14 @@ public class PointService {
         if(point.getLatitude() <- 90 || point.getLatitude() > 90)
             throw new Exception("Latitude invalida");
 
-        if(point.getLongitude() <- 90 || point.getLongitude() > 90)
+        if(point.getLongitude() <- 90 || point. getLongitude() > 90)
             throw new Exception("Longitude invalida");
 
         UserEntity userAuth = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        point.setUser(userAuth);
 
 
-        return point;
+        return repository.save(point);
     }
 
     public void deleteByid(UUID id) throws Exception{

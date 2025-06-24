@@ -28,10 +28,6 @@ public class VehicleEntity {
     @Column(length = 50, nullable = false)
     private String cor;
 
-    @Enumerated(EnumType.ORDINAL)
-    @Column(nullable = false)
-    private CarType type;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_user")
     private UserEntity user;
@@ -46,14 +42,6 @@ public class VehicleEntity {
 
     public void setCor(String cor) {
         this.cor = cor;
-    }
-
-    public CarType getType() {
-        return type;
-    }
-
-    public void setType(CarType type) {
-        this.type = type;
     }
 
     public UserEntity getUser() {

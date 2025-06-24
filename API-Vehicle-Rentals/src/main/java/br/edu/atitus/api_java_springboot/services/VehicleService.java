@@ -64,16 +64,12 @@ public class VehicleService {
             throw new Exception("Cor não pode ser vazio");
         }
 
-        if(car.getType() == null) {
-            throw new Exception("Tipo de carro não pode ser vazio");
-        }
-
-        //TODO - Adicionar alguma forma de linkar ponto cadastrado com objeto carro
-        //TODO - Criar a Controller e receber as informações (Criar a controladora, DTO e linkar com a DB)
-
         UserEntity userAuth = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        car.setUser(userAuth);
 
-        return car;
+
+
+        return repository.save(car);
     }
 
     //Basicamente esses dois métodos foram copiados do PointService, mas eu acho que funciona do mesmo jeito
