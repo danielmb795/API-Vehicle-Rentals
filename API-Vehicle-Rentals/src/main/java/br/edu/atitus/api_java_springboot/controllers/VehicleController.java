@@ -33,7 +33,7 @@ public class VehicleController {
         return ResponseEntity.status(201).body(vehicle);
     }
 
-    @GetMapping
+    @GetMapping("/listagem-veiculos")
     public ResponseEntity<List<VehicleEntity>> listaVeiculos(){
         var lista = service.findAll();
 

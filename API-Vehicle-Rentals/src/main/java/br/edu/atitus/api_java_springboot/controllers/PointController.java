@@ -40,6 +40,16 @@ public class PointController {
         return ResponseEntity.ok(lista);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<PointEntity> update(@PathVariable UUID id, @RequestBody PointDTO dto) throws Exception {
+        PointEntity existingPoint = service.findById(id);  // Busca com verificação de permissão
+
+        BeanUtils.copyProperties(dto, existingPoint);
+        service.save(existingPoint);
+
+        return ResponseEntity.ok(existingPoint);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable UUID id) throws Exception{
         service.deleteByid(id);

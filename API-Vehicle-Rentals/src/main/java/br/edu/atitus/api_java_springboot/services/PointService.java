@@ -55,4 +55,17 @@ public class PointService {
          UserEntity userAuth = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
          return repository.findByUser(userAuth);
      }
+
+    public PointEntity findById(UUID id) throws Exception {
+        PointEntity point = repository.findById(id)
+                .orElseThrow(() -> new Exception("Ponto não encontrado com o ID: " + id));
+
+        UserEntity userAuth = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (!point.getUser().getId().equals(userAuth.getId())) {
+            throw new Exception("Você não tem permissão para acessar esse ponto");
+        }
+
+        return point;
+    }
 }
