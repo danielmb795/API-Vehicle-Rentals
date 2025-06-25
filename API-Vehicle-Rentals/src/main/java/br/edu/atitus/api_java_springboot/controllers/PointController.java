@@ -40,15 +40,15 @@ public class PointController {
         return ResponseEntity.ok(lista);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@PathVariable UUID id, @RequestBody PointDTO dto) {
-        try {
-            PointEntity existingPoint = service.findById(id);
-            BeanUtils.copyProperties(dto, existingPoint);
-            service.save(existingPoint);
-            return ResponseEntity.ok(existingPoint);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ResponseEntity<Object> update(@PathVariable UUID id, @RequestBody PointDTO dto) throws Exception {
+
+        PointEntity existingPoint = service.findById(id);
+
+        BeanUtils.copyProperties(dto, existingPoint);
+
+        PointEntity updatedPoint = service.save(existingPoint);
+
+        return ResponseEntity.ok(updatedPoint);
     }
 
     @DeleteMapping("/{id}")

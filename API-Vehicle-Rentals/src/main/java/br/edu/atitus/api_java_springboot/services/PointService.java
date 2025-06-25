@@ -28,10 +28,10 @@ public class PointService {
             throw new Exception("Descrção invalida");
         point.setDescription(point.getDescription().trim());
 
-        if(point.getLatitude() <- -90 || point.getLatitude() > 90)
+        if(point.getLatitude() < -90 || point.getLatitude() > 90)
             throw new Exception("Latitude invalida");
 
-        if(point.getLongitude() <- -180 || point. getLongitude() > 180)
+        if(point.getLongitude() < -180 || point. getLongitude() > 180)
             throw new Exception("Longitude invalida");
 
         UserEntity userAuth = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
