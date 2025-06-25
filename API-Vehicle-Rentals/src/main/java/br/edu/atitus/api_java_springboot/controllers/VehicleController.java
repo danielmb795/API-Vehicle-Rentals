@@ -40,7 +40,7 @@ public class VehicleController {
         return ResponseEntity.ok(lista);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deletar-veiculo/{id}")
     public ResponseEntity<String> deleteVehicles(@PathVariable UUID id) throws Exception{
 
         return ResponseEntity.ok("Veiculo Excluido");
